@@ -25,6 +25,7 @@ RUN curl -sL https://deb.nodesource.com/setup_4.x | bash - && \
             yui-compressor \
             linkchecker \
             nodejs \
+            libgmp-dev \
         --no-install-recommends && \
         apt-get clean && \
         npm -g install npm@latest && \
@@ -32,8 +33,10 @@ RUN curl -sL https://deb.nodesource.com/setup_4.x | bash - && \
 
 # Install PHP extensions required for Yii 2.0 Framework
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/ && \
+    docker-php-ext-configure gmp && \
     docker-php-ext-configure bcmath && \
     docker-php-ext-install gd \
+                           gmp \
                            intl \
                            pdo_mysql \
                            mbstring \
